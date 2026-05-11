@@ -7,7 +7,7 @@ from models import Models
 from load_data_set import LoadDataSet
 from evaluate_test import EvaluateModel
 
-model_spec = Models((224,224,3)).model5_normalized_augmented
+model_spec = Models((224,224,3)).model6_normalized_augmented
 
 load_data = LoadDataSet(
     dataset_dir="train",
@@ -57,7 +57,7 @@ model.compile(
 history = model.fit(
     train_dataset, 
     validation_data=val_dataset,
-    epochs=50,
+    epochs=100,
     callbacks=[early_stopping, tensorboard_callback, reduce_lr]
 )
 

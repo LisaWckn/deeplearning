@@ -1,4 +1,5 @@
 import keras
+import tensorflow as tf
 from keras import layers
 
 class LoadDataSet:
@@ -87,7 +88,6 @@ class LoadDataSet:
             layers.RandomRotation(0.05),
             layers.RandomZoom(0.05),
             layers.RandomContrast(0.1),
-            layers.RandomBrightness(0.1),
         ])
         return dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
 

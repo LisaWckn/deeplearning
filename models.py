@@ -36,6 +36,8 @@ class Models:
         self.model5_augmented = self.getModel5(inputShape, model_name='model5_augmented', augment=True)
         self.model5_normalized_augmented = self.getModel5(inputShape, model_name='model5_normalized_augmented', normalize=True, augment=True)
 
+        self.model6_normalized_augmented = self.getModel6(inputShape, model_name='model6_normalized_augmented', normalize=True, augment=True)
+
     def getModel1(self, inputShape, model_name, normalize=False, augment=False):
 
         model = keras.Sequential()
@@ -231,6 +233,6 @@ class Models:
         model.add(keras.layers.Dense(units=256, activation='relu'))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=12, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name, normalize=normalize, augment=augment)
