@@ -7,13 +7,11 @@ from models import Models
 from load_data_set import LoadDataSet
 from evaluate_test import EvaluateModel
 
-model_spec = Models((224,224,3)).model6_normalized_augmented
+model_spec = Models((224,224,3)).model12
 
 load_data = LoadDataSet(
     dataset_dir="train",
-    dataset_test_dir="test",
-    normalize=model_spec.normalize,
-    augment=model_spec.augment
+    dataset_test_dir="test"
 )
 
 train_dataset, val_dataset = load_data.getTrainDataset()
@@ -58,7 +56,7 @@ history = model.fit(
     train_dataset, 
     validation_data=val_dataset,
     epochs=100,
-    callbacks=[early_stopping, tensorboard_callback, reduce_lr]
+    callbacks=[tensorboard_callback, early_stopping, reduce_lr]
 )
 
 model_path = f"models/{model_spec.name}.keras"
