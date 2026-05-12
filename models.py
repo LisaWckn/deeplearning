@@ -202,7 +202,6 @@ class Models:
         model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
-        model.add(keras.layers.Dropout(0.25))
 
         # Block 2: Mehr Filter für komplexere Features
         model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
@@ -210,7 +209,6 @@ class Models:
         model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
-        model.add(keras.layers.Dropout(0.25))
 
         # Block 3: Noch mehr Filter für höhere Abstraktion
         model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
@@ -218,14 +216,12 @@ class Models:
         model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
-        model.add(keras.layers.Dropout(0.25))
 
         model.add(keras.layers.Conv2D(256, 3, padding="same", activation="relu"))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.Conv2D(256, 3, padding="same", activation="relu"))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.MaxPooling2D())
-        model.add(keras.layers.Dropout(0.35))
 
         model.add(keras.layers.GlobalAveragePooling2D())
 
@@ -233,6 +229,6 @@ class Models:
         model.add(keras.layers.Dense(units=256, activation='relu'))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=12, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name, normalize=normalize, augment=augment)

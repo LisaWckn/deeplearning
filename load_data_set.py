@@ -36,12 +36,12 @@ class LoadDataSet:
         train_dataset = full_dataset[0].cache().shuffle(1000)
         val_dataset = full_dataset[1].cache()
 
+        if self.augment:
+            train_dataset = self.addAugmentation(train_dataset)
+
         if self.normalize:
             train_dataset = self.addNormalization(train_dataset)
             val_dataset = self.addNormalization(val_dataset)
-
-        if self.augment:
-            train_dataset = self.addAugmentation(train_dataset)
 
         self.train_dataset = train_dataset
         self.val_dataset = val_dataset
