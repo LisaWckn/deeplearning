@@ -7,7 +7,7 @@ from models import Models
 from load_data_set import LoadDataSet
 from evaluate_test import EvaluateModel
 
-model_spec = Models((224,224,3)).model12
+model_spec = Models((224,224,3)).model17
 
 load_data = LoadDataSet(
     dataset_dir="train",

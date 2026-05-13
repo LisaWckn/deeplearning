@@ -34,6 +34,16 @@ class Models:
         self.model11 = self.getModel11(inputShape, model_name='model11')
         
         self.model12 = self.getModel12(inputShape, model_name='model12')
+        
+        self.model13 = self.getModel13(inputShape, model_name='model13')
+        
+        self.model14 = self.getModel14(inputShape, model_name='model14')
+        
+        self.model15 = self.getModel15(inputShape, model_name='model15')
+        
+        self.model16 = self.getModel16(inputShape, model_name='model16')
+        
+        self.model17 = self.getModel17(inputShape, model_name='model17')
 
     def getModel1(self, inputShape, model_name):
 
@@ -50,7 +60,7 @@ class Models:
 
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -72,7 +82,7 @@ class Models:
 
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -99,7 +109,7 @@ class Models:
 
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -126,7 +136,7 @@ class Models:
 
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='elu'))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -153,7 +163,7 @@ class Models:
 
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='silu'))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -185,7 +195,7 @@ class Models:
 
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -213,7 +223,7 @@ class Models:
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -242,7 +252,7 @@ class Models:
 
         model.add(keras.layers.Dense(units=128, activation='relu'))
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -270,7 +280,7 @@ class Models:
         model.add(keras.layers.Flatten())        
         model.add(keras.layers.Dense(units=128, activation='relu'))
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -298,7 +308,7 @@ class Models:
         model.add(keras.layers.Flatten())        
         model.add(keras.layers.Dense(units=128, activation='relu', kernel_initializer='he_normal'))
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
         return ModelSpec(model=model, name=model_name)
     
@@ -326,7 +336,7 @@ class Models:
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
 
         return ModelSpec(model=model, name=model_name)
     
@@ -358,7 +368,195 @@ class Models:
         model.add(keras.layers.Flatten())
         model.add(keras.layers.Dense(units=128, activation='relu'))
         model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Dense(units=15, activation='softmax')) 
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def getModel13(self, inputShape, model_name):
+
+        model = keras.Sequential()
+
+        model.add(keras.layers.RandomFlip("horizontal_and_vertical"))
+        model.add(keras.layers.RandomRotation(0.05))
+        model.add(keras.layers.RandomZoom(0.05))
+        model.add(keras.layers.RandomContrast(0.1))
+
+        model.add(keras.layers.Rescaling(1./255))
+
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu', input_shape=inputShape))
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        # Weiteres Dense Layer für bessere Kategorisierung
+        model.add(keras.layers.Flatten())
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.Dropout(0.4))
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def getModel14(self, inputShape, model_name):
+
+        model = keras.Sequential()
+
+        model.add(keras.layers.RandomFlip("horizontal_and_vertical"))
+        model.add(keras.layers.RandomRotation(0.05))
+        model.add(keras.layers.RandomZoom(0.05))
+        model.add(keras.layers.RandomContrast(0.1))
+
+        model.add(keras.layers.Rescaling(1./255))
+
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu', input_shape=inputShape))
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        # Wieder GlobalAveragePooling
+        model.add(keras.layers.GlobalAveragePooling2D())
+
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.Dropout(0.4))
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def getModel15(self, inputShape, model_name):
+
+        model = keras.Sequential()
+
+        # RandomFlip angepasst
+        model.add(keras.layers.RandomFlip("horizontal"))
+        model.add(keras.layers.RandomRotation(0.05))
+        model.add(keras.layers.RandomZoom(0.05))
+        model.add(keras.layers.RandomContrast(0.1))
+
+        model.add(keras.layers.Rescaling(1./255))
+
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu', input_shape=inputShape))
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.Dropout(0.4))
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def getModel16(self, inputShape, model_name):
+
+        model = keras.Sequential()
+
+        model.add(keras.layers.RandomFlip("horizontal"))
+        model.add(keras.layers.RandomRotation(0.05))
+        model.add(keras.layers.RandomZoom(0.05))
+        model.add(keras.layers.RandomContrast(0.1))
+
+        model.add(keras.layers.Rescaling(1./255))
+
+        # BatchNormalisierung erneut getestet
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu', input_shape=inputShape))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Dropout(0.4))
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def getModel17(self, inputShape, model_name):
+
+        model = keras.Sequential()
+
+        model.add(keras.layers.RandomFlip("horizontal"))
+        model.add(keras.layers.RandomRotation(0.05))
+        model.add(keras.layers.RandomZoom(0.05))
+        model.add(keras.layers.RandomContrast(0.1))
+
+        model.add(keras.layers.Rescaling(1./255))
+
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu', input_shape=inputShape))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(64, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Conv2D(128, kernel_size=3, padding='same', activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.MaxPool2D(pool_size=(2,2), strides=2))
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+
+        # Weitere Dropout Schicht
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Dropout(0.3))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Dropout(0.4))
+        model.add(keras.layers.Dense(units=10, activation='softmax')) 
 
         return ModelSpec(model=model, name=model_name)
 
