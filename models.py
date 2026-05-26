@@ -49,6 +49,12 @@ class Models:
         
         self.model19 = self.getModel19(inputShape, model_name='model19')
 
+        self.modelFineTuneVGG19 = self.fineTuneVGG19(inputShape, model_name='modelFineTuneVGG19')
+        
+        self.modelFineTuneVGG19_2 = self.fineTuneVGG19_2(inputShape, model_name='modelFineTuneVGG19_2')
+
+        self.modelFineTuneresNet152V2 = self.fineTuneresNet152V2(inputShape, model_name='modelFineTuneresNet152V2')
+
     def getModel1(self, inputShape, model_name):
 
         model = keras.Sequential()
@@ -670,4 +676,56 @@ class Models:
         model.add(keras.layers.Dropout(0.5))
         model.add(keras.layers.Dense(units=10, activation='softmax')) 
         
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneVGG19(self, inputShape, model_name):
+        vgg19 = keras.applications.VGG19(include_top=False, input_shape=inputShape)
+
+        for layer in vgg19.layers:
+            layer.trainable = False
+
+        model = keras.Sequential()
+        model.add(vgg19)
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+        model.add(keras.layers.Dense(units=10, activation='softmax'))
+
+        print(model.summary())
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneVGG19_2(self, inputShape, model_name):
+        vgg19 = keras.applications.VGG19(include_top=False, input_shape=inputShape)
+
+        for layer in vgg19.layers:
+            layer.trainable = False
+
+        model = keras.Sequential()
+        model.add(vgg19)
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.Dense(units=10, activation='softmax'))
+
+        print(model.summary())
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneresNet152V2(self, inputShape, model_name):
+        resNet152V2 = keras.applications.ResNet152V2(include_top=False, input_shape=inputShape)
+
+        for layer in resNet152V2.layers:
+            layer.trainable = False
+
+        model = keras.Sequential()
+        model.add(resNet152V2)
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.Dense(units=10, activation='softmax'))
+
+        print(model.summary())
+
         return ModelSpec(model=model, name=model_name)
