@@ -3,11 +3,11 @@ from keras import layers
 from keras.callbacks import TensorBoard
 from datetime import datetime
 
-from models import Models
+from meilenstein1.models import Models
 from load_data_set import LoadDataSet
 from evaluate_test import EvaluateModel
 
-model_spec = Models((224,224,3)).modelFineTuneresNet152V2
+model_spec = Models((224,224,3)).modelFineTuneResNet50V2_2_Step2
 
 load_data = LoadDataSet(
     dataset_dir="train",
@@ -47,7 +47,7 @@ reduce_lr = keras.callbacks.ReduceLROnPlateau(
     )
 
 model.compile(
-    optimizer="adam",
+    optimizer=keras.optimizers.Adam(1e-5),
     loss='sparse_categorical_crossentropy',
     metrics=['accuracy']
 )

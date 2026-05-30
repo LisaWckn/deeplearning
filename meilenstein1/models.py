@@ -55,6 +55,14 @@ class Models:
 
         self.modelFineTuneresNet152V2 = self.fineTuneresNet152V2(inputShape, model_name='modelFineTuneresNet152V2')
 
+        self.modelFineTuneResNet50V2 = self.fineTuneResNet50V2(inputShape, model_name='modelFineTuneResNet50V2')
+        
+        self.modelFineTuneResNet50V2_Step2 = self.fineTuneResNet50V2_Step2(inputShape, model_name='modelFineTuneResNet50V2_Step2')
+
+        self.modelFineTuneResNet50V2_2 = self.fineTuneResNet50V2_2(inputShape, model_name='modelFineTuneResNet50V2_2')
+
+        self.modelFineTuneResNet50V2_2_Step2 = self.fineTuneResNet50V2_2_Step2(inputShape, model_name='modelFineTuneResNet50V2_2_Step2')
+
     def getModel1(self, inputShape, model_name):
 
         model = keras.Sequential()
@@ -727,5 +735,103 @@ class Models:
         model.add(keras.layers.Dense(units=10, activation='softmax'))
 
         print(model.summary())
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneResNet50V2(self, inputShape, model_name):
+        resNet50V2 = keras.applications.ResNet50V2(include_top=False, input_shape=inputShape)
+
+        for layer in resNet50V2.layers:
+            layer.trainable = False
+
+        model = keras.Sequential()
+
+        model.add(keras.layers.RandomFlip("horizontal"))
+        model.add(keras.layers.RandomRotation(0.1))
+        model.add(keras.layers.RandomZoom(0.1))
+        model.add(keras.layers.RandomContrast(0.2))
+
+        model.add(keras.layers.Lambda(
+            keras.applications.resnet_v2.preprocess_input
+        ))
+
+        model.add(resNet50V2)
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+        model.add(keras.layers.Dense(units=256, activation='relu'))
+        model.add(keras.layers.Dense(units=128, activation='relu'))
+        model.add(keras.layers.Dense(units=10, activation='softmax'))
+
+        print(model.summary())
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneResNet50V2_Step2(self, inputShape, model_name):
+        model = keras.models.load_model(
+            "models/modelFineTuneResNet50V2.keras",
+            custom_objects={
+                "preprocess_input": keras.applications.resnet_v2.preprocess_input
+            }
+        )
+
+        base_model = model.get_layer("resnet50v2")
+        base_model.trainable = True
+
+        for layer in base_model.layers[:-30]:
+            layer.trainable = False
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneResNet50V2_2(self, inputShape, model_name):
+        resNet50V2 = keras.applications.ResNet50V2(include_top=False, 
+                                                   weights= "imagenet",
+                                                   input_shape=inputShape)
+
+        for layer in resNet50V2.layers:
+            layer.trainable = False
+
+        model = keras.Sequential()
+
+        model.add(keras.layers.InputLayer(shape=inputShape))
+
+        model.add(keras.layers.RandomFlip("horizontal"))
+        model.add(keras.layers.RandomRotation(0.1))
+        model.add(keras.layers.RandomZoom(0.1))
+        model.add(keras.layers.RandomContrast(0.2))
+
+        model.add(keras.layers.Lambda(
+            keras.applications.resnet_v2.preprocess_input
+        ))
+
+        model.add(resNet50V2)
+
+        model.add(keras.layers.GlobalAveragePooling2D())
+        model.add(keras.layers.Dense(256, activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Dropout(0.3))
+
+        model.add(keras.layers.Dense(128, activation='relu'))
+        model.add(keras.layers.BatchNormalization())
+        model.add(keras.layers.Dropout(0.2))
+
+        model.add(keras.layers.Dense(10, activation='softmax'))
+
+        print(model.summary())
+
+        return ModelSpec(model=model, name=model_name)
+    
+    def fineTuneResNet50V2_2_Step2(self, inputShape, model_name):
+        model = keras.models.load_model(
+            "models/modelFineTuneResNet50V2_2.keras",
+            custom_objects={
+                "preprocess_input": keras.applications.resnet_v2.preprocess_input
+            }
+        )
+
+        base_model = model.get_layer("resnet50v2")
+        base_model.trainable = True
+
+        for layer in base_model.layers[:-30]:
+            layer.trainable = False
 
         return ModelSpec(model=model, name=model_name)

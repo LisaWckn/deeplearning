@@ -4,7 +4,12 @@ import keras
 class EvaluateModel:
 
     def evaluate_model(self, test_dataset, class_names, model_path):
-        model = keras.models.load_model(model_path)
+        model = keras.models.load_model(
+            model_path,
+            custom_objects={
+                "preprocess_input": keras.applications.resnet_v2.preprocess_input
+            }
+        )
 
         print("Klassen:", class_names)
 
