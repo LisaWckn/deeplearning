@@ -3,11 +3,16 @@ from keras import layers
 from keras.callbacks import TensorBoard
 from datetime import datetime
 
-from meilenstein1.models import Models
+from models import Models
 from load_data_set import LoadDataSet
 from evaluate_test import EvaluateModel
 
-model_spec = Models((224,224,3)).modelFineTuneResNet50V2_2_Step2
+# Variable zur Anpassung der Lernrate
+# TransferLearning und Trainieren des Klassifikationskopfes: 1e-3
+# Finetuning: 1e-5
+INITIAL_LEARNING_RATE = 1e-6
+
+model_spec = Models((224,224,3)).modelFineTuned_30Layer
 
 load_data = LoadDataSet(
     dataset_dir="train",
@@ -22,6 +27,8 @@ if not load_data.check_label_consistency():
     raise ValueError("Label-Mismatch zwischen Train, Validation und Test festgestellt")
 
 model = model_spec.model
+
+print(model.summary())
 
 # TensorBoard Callback für Logging
 tensorboard_callback = TensorBoard(
@@ -47,7 +54,7 @@ reduce_lr = keras.callbacks.ReduceLROnPlateau(
     )
 
 model.compile(
-    optimizer=keras.optimizers.Adam(1e-5),
+    optimizer=keras.optimizers.Adam(INITIAL_LEARNING_RATE),
     loss='sparse_categorical_crossentropy',
     metrics=['accuracy']
 )
