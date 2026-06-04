@@ -323,7 +323,11 @@ class Models:
         total_layers = len(base_model.layers)
         trainable_layers = max(0, min(trainable_layers, total_layers))
 
-        for layer in base_model.layers[:-trainable_layers]:
-            layer.trainable = False
+        for layer in base_model.layers[-trainable_layers:]:
+            layer.trainable = True
+
+        for layer in base_model.layers:
+            if isinstance(layer, keras.layers.BatchNormalization):
+                layer.trainable = False
 
         return ModelSpec(model=model, name=model_name)
