@@ -27,13 +27,12 @@ class Models:
         self.modelTransferLearning8 = self.getTransferLearningModelResNet50V2_8(inputShape, model_name='modelTransferLearning8')
 
         # Bis hier hin bestes Modell: modelTransferLearning7 mit 78.17%
-        # Modell modelTransferLearning7 wird finegetuned
+        # Modell modelTransferLearning7 wird fine-getuned
         # Anzahl der zum Training hinzugenommen Layer aus dem ResNet50 Modell werden schrittweise erhöht
-
-        self.modelFineTuned_5Layer = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 5, 'modelFineTuned_5Layer') #77.95%, 77.95%
-        self.modelFineTuned_10Layer = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 10, 'modelFineTuned_10Layer') #78.09%, 78.06%
-        self.modelFineTuned_20Layer = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 20, 'modelFineTuned_20Layer') # 78.20%
-        self.modelFineTuned_30Layer = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 30, 'modelFineTuned_30Layer') # 77.95%
+        self.modelFineTuned_Conv5Block3 = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 13, 'modelFineTuned_Conv5Block3') # 78.84% (1e-5), 77.72% (1e-6, volle 100 Epochen), 79.94% (1e-4)
+        self.modelFineTuned_Conv5Block2u3 = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 24, 'modelFineTuned_Conv5Block2u3') # 79.46% (1e-5, 45 Epochen), 80.44% (5e-5), 81.59% (1e-4), 81.96% (5e-4)
+                                        # Letztes Training und damit aktueller Stand der Genauigkeit: 81.43%
+        self.modelFineTuned_Conv5Full = self.fineTuneResNet50V2("models/modelTransferLearning7.keras", 36, 'modelFineTuned_Conv5Full') # 79.26% (1e-5, 35 Epochen), 80.72% (1e-4)
 
     def getTransferLearningModelResNet50V2(self, inputShape, model_name):
         # Basismodell für den Klassifikationskopf
@@ -325,9 +324,5 @@ class Models:
 
         for layer in base_model.layers[-trainable_layers:]:
             layer.trainable = True
-
-        for layer in base_model.layers:
-            if isinstance(layer, keras.layers.BatchNormalization):
-                layer.trainable = False
 
         return ModelSpec(model=model, name=model_name)
