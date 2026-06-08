@@ -7,8 +7,9 @@ import seaborn as sns
 
 from load_data_set import LoadDataSet
 
+MODEL_NAME = "modelFineTuned_Conv5Block2u3"
 # Pfad zum gespeicherten Modell
-model_path = "models/modelTransferLearning7.keras"
+model_path = f"models/{MODEL_NAME}.keras"
 
 # Modell laden
 # custom_objects wird benötigt, wenn beim Speichern / Laden
@@ -41,7 +42,7 @@ y_pred = np.argmax(y_pred_probs, axis=1)
 
 # Confusion Matrix berechnen
 # Sie zeigt, welche Klassen korrekt bzw. falsch vorhergesagt wurden
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true, y_pred, normalize='true')
 
 # Zuordnung interner Klassenbezeichnungen zu lesbaren Aktivitätsnamen
 label_map = {
@@ -65,7 +66,7 @@ plt.figure(figsize=(8, 6))
 sns.heatmap(
     cm,
     annot=True,                    # Zellwerte anzeigen
-    fmt="d",                       # Ganzzahlen formatieren
+    fmt=".2f",                     # 2 Nachkommastellen
     cmap="Blues",
     xticklabels=display_class_names,
     yticklabels=display_class_names
@@ -82,7 +83,7 @@ plt.yticks(rotation=0)
 plt.tight_layout()
 
 # Confusion Matrix als Bild speichern
-output_path = "confusion_matrix.jpg"
+output_path = f"diagrams/{MODEL_NAME}/confusion_matrix.jpg"
 plt.savefig(output_path, format="jpg", dpi=300)
 plt.show()
 
@@ -124,5 +125,6 @@ plt.title("Classification Report", pad=20)
 plt.tight_layout()
 
 # Classification Report als Bild speichern
-plt.savefig("classification_report.jpg", format="jpg", dpi=300, bbox_inches="tight")
+report_path = f"diagrams/{MODEL_NAME}/classification_report.jpg"
+plt.savefig(report_path, format="jpg", dpi=300, bbox_inches="tight")
 plt.close()
