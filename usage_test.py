@@ -2,7 +2,7 @@ import keras
 import numpy as np
 
 MODEL_NAME = "modelFineTuned_Conv5Block2u3"
-IMAGE_NAME = "using_laptop_test"
+IMAGE_NAME = "sleeping_test"
 
 model_path = f"models/{MODEL_NAME}.keras"
 image_path = f"new_pictures/{IMAGE_NAME}.jpeg"
