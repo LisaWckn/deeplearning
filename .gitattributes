@@ -7,3 +7,8 @@ meilenstein1/models/*.keras filter=lfs diff=lfs merge=lfs -text
 meilenstein1/*.keras filter=lfs diff=lfs merge=lfs -text
 meilenstein1/logs/fit/* filter=lfs diff=lfs merge=lfs -text
 meilenstein1/logs/fit/**/*.tfevents.* filter=lfs diff=lfs merge=lfs -text
+
+meilenstein2/models/*.keras filter=lfs diff=lfs merge=lfs -text
+meilenstein2/*.keras filter=lfs diff=lfs merge=lfs -text
+meilenstein2/logs/fit/* filter=lfs diff=lfs merge=lfs -text
+meilenstein2/logs/fit/**/*.tfevents.* filter=lfs diff=lfs merge=lfs -text
