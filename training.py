@@ -3,7 +3,7 @@ from keras import layers
 from keras.callbacks import TensorBoard
 from datetime import datetime
 
-from models import Models
+from meilenstein2.models import Models
 from load_data_set import LoadDataSet
 from evaluate_test import EvaluateModel
 
