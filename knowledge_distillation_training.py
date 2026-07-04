@@ -65,7 +65,7 @@ def build_teacher_without_aug(teacher, input_shape):
 
     return model
 
-student_model_spec = Models((224,224,3)).student5_augmented_temperature4
+student_model_spec = Models((224,224,3)).student4_full
 student = student_model_spec.model
 print(student.summary())
 

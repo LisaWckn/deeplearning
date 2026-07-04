@@ -60,6 +60,9 @@ class Models:
         self.student4_augmented_temperature5 = self.getStudent4(inputShape, model_name='student4_augmented_temperature5', augmented=True, temperature=5.0)
         self.student4_augmented_temperature6 = self.getStudent4(inputShape, model_name='student4_augmented_temperature6', augmented=True, temperature=6.0)
 
+        # Student4 Full: Test 71.55%, Train 96.58%, Val 72.32%, Epochen 76
+        self.student4_full = self.getStudent4(inputShape, model_name='student4_full', augmented=True, normalize=True, alpha=0.5, temperature=5.0)
+
         # Total params: 2.560.298 Params
         # Trainable params: 2.555.818 Params
         # Standard: Test 63.69%, Train 99.49%, Val 64.64%, Epochen 82
@@ -76,12 +79,15 @@ class Models:
 
         # Temperature=2.0: Test 67.76%, Train 95.45%, Val 69.17%, Epochen 77
         # Temperature=4.0: Test 69.95%, Train 96.34%, Val 71.55%, Epochen 101
-        # Temperature=5.0: Test 70.76%, Train 95.45%, Val 71.13%, Epochen 97
-        # Temperature=6.0: Test 70.37%, Train 94.24%, Val 71.07%, Epochen 71
+        # Temperature=5.0: Test 69.36%, Train 93.14%, Val 69.94%, Epochen 94
+        # Temperature=6.0: Test 72.56%, Train 97.49%, Val 73.21%, Epochen 99
         self.student5_augmented_temperature2 = self.getStudent5(inputShape, model_name='student5_augmented_temperature2', augmented=True, temperature=2.0)
         self.student5_augmented_temperature4 = self.getStudent5(inputShape, model_name='student5_augmented_temperature4', augmented=True, temperature=4.0)
         self.student5_augmented_temperature5 = self.getStudent5(inputShape, model_name='student5_augmented_temperature5', augmented=True, temperature=5.0)
         self.student5_augmented_temperature6 = self.getStudent5(inputShape, model_name='student5_augmented_temperature6', augmented=True, temperature=6.0)
+
+        # Student5 Full: Test 70.17%, Train 95.89%, Val 69.70%, Epochen 84
+        self.student5_full = self.getStudent5(inputShape, model_name='student5_full', augmented=True, normalize=True, alpha=0.5, temperature=6.0)
 
     def getStudent1(self, 
                     inputShape, 
