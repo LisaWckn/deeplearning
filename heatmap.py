@@ -7,9 +7,9 @@ import seaborn as sns
 
 from load_data_set import LoadDataSet
 
-MODEL_NAME = "model18"
+MODEL_NAME = "student5_full"  # Name des Modells, das ausgewertet werden soll
 # Pfad zum gespeicherten Modell
-model_path = f"meilenstein1/models/{MODEL_NAME}.keras"
+model_path = f"models/{MODEL_NAME}.keras"
 
 # Modell laden
 # custom_objects wird benötigt, wenn beim Speichern / Laden
